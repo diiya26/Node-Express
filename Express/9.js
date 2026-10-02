@@ -2,10 +2,8 @@ const express = require("express");
 const app = express();
 const port = 8080;
 
-// Middleware to read JSON data
 app.use(express.json());
 
-// -------------- Product Data---------------------
 let products = [
     {
         id: 101,
@@ -27,7 +25,6 @@ let products = [
     }
 ];
 
-// ----------------- CUSTOM MIDDLEWARE-------------------------
 const logger = (req, res, next) => {
     console.log("-------------");
     console.log("Method:", req.method);
@@ -35,23 +32,18 @@ const logger = (req, res, next) => {
     next();
 };
 
-// Apply middleware to all requests
 app.use(logger);
 
-// ----------------------------- ROUTING-------------------------
 
-// 1. Home Route
+
 app.get("/", (req, res) => {
     res.send("Welcome to Online Shopping API");
 });
 
-// 2. Get all products
 app.get("/products", (req, res) => {
     res.status(200).json(products);
 });
 
-// 3. Search product using Query Parameter
-// Example: /products/search?category=Electronics
 app.get("/products/search", (req, res) => {
 
     const category = req.query.category;
@@ -69,8 +61,6 @@ app.get("/products/search", (req, res) => {
   }
 });
 
-// 4. Get product using Route Parameter
-// Example: /products/101
 app.get("/products/:id", (req, res) => {
     const productId = req.params.id;
     const product = products.find(
@@ -85,7 +75,6 @@ app.get("/products/:id", (req, res) => {
     }
 });
 
-// 5. Add new product
 
 app.post("/products", (req, res) => {
     const newProduct = req.body;
@@ -96,7 +85,6 @@ app.post("/products", (req, res) => {
     });
 });
 
-// 6. Update product
 app.put("/products/:id", (req, res) => {
     const productId = req.params.id;
     const index = products.findIndex(
@@ -115,7 +103,6 @@ app.put("/products/:id", (req, res) => {
     }
 });
 
-// 7. Delete product
 app.delete("/products/:id", (req, res) => {
     const productId = req.params.id;
     const index = products.findIndex(
@@ -134,15 +121,13 @@ app.delete("/products/:id", (req, res) => {
     }
 });
 
-// ----------------404 MIDDLEWARE-----------------------
 app.use((req, res) => {
     res.status(404).json({
         message: "API endpoint not found"
     });
 });
 
-// -------------- START SERVER--------------------
-app.listen(port, () => {
+ app.listen(port, () => {
     console.log(
         `Server running at http://localhost:${port}`
     );
