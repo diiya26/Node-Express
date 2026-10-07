@@ -1,20 +1,25 @@
-const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(
-"product_db",       // Database name
-"root",                   // MySQL username
-"",                         // MySQL password
+const { Sequelize } =require("sequelize");
+
+constsequelize=newSequelize(
+    "product_db",       // Database name
+    "postgres",         // PostgreSQL username
+    "1234",             // PostgreSQL password
     {
-        host: "localhost",
-        dialect: "mysql"
+        host:"localhost",
+        dialect:"postgres",
+        port:5432
     }
 );
-// check database connection 
+
+// Check database connection
+
 sequelize.authenticate()
-    .then(() => {
-        console.log("MySQL database connected successfully!");
+    .then(() =>{
+        console.log("PostgreSQL database connected successfully!");
     })
-    .catch((error) => {
+    .catch((error) =>{
         console.log("Unable to connect:", error);
     });
-module.exports = sequelize;
+
+module.exports=sequelize;
 
